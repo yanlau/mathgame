@@ -28,16 +28,21 @@ end
 
 def verify_answer
   if @playeranswer == @answer
-    @score[@turn] =+ 1
-    puts "You got the answer right!"
+    @score[@turn] += 1
+    puts "You got the answer right!".green
   else
-    @lives[@turn] =+ 1
-    puts "Wrong! The answer is #{@answer}"
+    @lives[@turn] -= 1
+    puts "Wrong! The answer is #{@answer}".red
   end
 end
 
 def score_stats
   puts "#{@names[@turn]} you now have #{@score[@turn]} points and #{@lives[@turn]} lives left."
+end
+
+def reset
+  @score = [0,0]
+  @lives = [3,3]
 end
 
 def game_loop
@@ -48,13 +53,24 @@ def game_loop
     verify_answer
     score_stats
     if @lives[@turn] > 0
-      if @turn = 0
+      if @turn == 0
         @turn = 1
       else
         @turn = 0
       end
     else
-      puts "You have lost"
+      puts "You have disappointed me #{@names[@turn]}. FAIL!".red
+      puts "Do you want to keep playing? (Yes or No) "
+      if gets.chomp.capitalize == "Yes"
+        puts "Are the same players playing? (Yes or No) "
+        if gets.chomp.capitalize == "Yes"
+          reset
+        else
+          game_loop
+        end
+      else
+        break
+      end
     end
   end
 end
