@@ -1,11 +1,8 @@
 #This is the main console for the code
 
-require 'pry'
-require './2playergame'
-require './variablestore'
-require 'colorize'
+require_relative 'game_ui'
 
 #binding.pry
 
-game_loop
+GameUI.new.game_play
 
